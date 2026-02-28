@@ -121,6 +121,28 @@ const App: React.FC = () => {
 
   const isFixedPriceModel = ['iPhone X', 'iPhone XS', 'iPhone XR', 'iPhone XS Max'].includes(state.model);
 
+  const whatsappUrl = useMemo(() => {
+    const functionalIssues = FUNCTIONAL_CHECKS
+      .filter(c => !state.checks[c.id])
+      .map(c => c.label.replace('Funzionante', 'NON Funzionante'))
+      .join(', ');
+    
+    const cosmeticIssues = COSMETIC_CHECKS
+      .filter(c => state.checks[c.id])
+      .map(c => c.label)
+      .join(', ');
+
+    const message = `Ciao iPhoneLab! Vorrei vendere il mio iPhone. Ecco i dettagli della mia valutazione:
+- Modello: ${state.model}
+- Capacità: ${state.storage}
+- Salute Batteria: ${state.batteryHealth}%
+- Funzionalità: ${functionalIssues || 'Tutto funzionante'}
+- Estetica: ${cosmeticIssues || 'Ottime condizioni'}
+- Quotazione Finale: €${evaluationResult}`;
+
+    return `https://wa.me/393489123708?text=${encodeURIComponent(message)}`;
+  }, [state, evaluationResult]);
+
   return (
     <div className="min-h-screen bg-[#F8F9FA] flex flex-col font-sans text-slate-900">
       {/* Header */}
@@ -303,7 +325,7 @@ const App: React.FC = () => {
 
                 <div className="space-y-4">
                   <a 
-                    href="https://wa.me/393489123708" 
+                    href={whatsappUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="w-full bg-[#25D366] text-white font-black py-6 rounded-2xl hover:bg-[#20ba5a] transition-all flex items-center justify-center gap-3 shadow-lg shadow-green-100 uppercase text-sm tracking-widest"
