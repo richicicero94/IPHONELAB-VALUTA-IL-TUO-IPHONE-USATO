@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+}
+
+@layer base {
+  body {
+    @apply bg-[#F8F9FA] text-slate-900 antialiased;
+  }
+}
+
+@layer components {
+  .serif {
+    font-family: var(--font-serif);
+  }
+  
+  /* Animazione per il cambio prezzo */
+  .price-pulse {
+    animation: price-pulse 0.3s ease-out;
+  }
+
+  @keyframes price-pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); color: #0abab5; }
+    100% { transform: scale(1); }
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0abab5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #099a95;
+}
